@@ -18,10 +18,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    Notes: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Note",
-    },
     Saved_Articles: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Article",

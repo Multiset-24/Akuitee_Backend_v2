@@ -1,17 +1,16 @@
-import { time } from 'console';
 import mongoose from 'mongoose';
 
-const noteSchema = new mongoose.schema({
-    Note:{
-        type:string,
+const noteSchema = new mongoose.Schema({
+    Note: {
+        type: String, 
         required: true
     },
-    User_id:{
-        type:mongoose.Schema.Types.ObjectId,
+    User_id: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-},{
+    }
+}, {
     timestamps: true
 });
 

@@ -2,17 +2,14 @@ import mongoose from 'mongoose';
 
 const industrySchema = new mongoose.Schema({
     Industry_Name: {
-        type:string,
+        type:String,
         required: true
     },
-    Articles:[{
+    Content_id:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref: 'Article'
+        ref: 'Content',
+        required: true
     }],
-    Ipo:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Ipo'
-    }]
 },{
     timestamps: true
 });

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const savedipoSchema = new mongoose.Schema({
-    Ipos:[{//array of ipos
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Ipo',
+const savedContentSchema = new mongoose.Schema({
+    Content:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'StagedContent',
         required: true
-    }],
+    },
     User:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -15,6 +15,6 @@ const savedipoSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const SavedIpo = mongoose.model('SavedIpo', savedipoSchema);
+const SavedContent = mongoose.model('SavedContent', savedContentSchema);
 
 export default SavedIpo;
