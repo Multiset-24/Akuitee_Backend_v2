@@ -110,6 +110,7 @@ const verifyLoginOtp = AsyncHandler(async (req, res) => {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
+    .header("x-auth-token", accessToken)
     .clearCookie("otpToken")
     .json(new ApiResponse(200, "Login successful", { accessToken }));
 });

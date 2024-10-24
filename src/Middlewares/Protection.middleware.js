@@ -27,8 +27,8 @@ const AdminProtection= (req, res, next) => {
     }
     try{
         const decoded= jwt.verify(token, process.env.JWT_SECRET);
-        req.user=decoded.user;
-        if(req.user.role!=='admin'){
+        req.user=decoded;
+        if(req.user.Role!=='Admin'){
             return res.status(401).json({msg:'Not authorized as an admin'});
         }
         next();
@@ -45,8 +45,8 @@ const SuperAdminProtection= (req, res, next) => {
     }
     try{
         const decoded= jwt.verify(token, process.env.JWT_SECRET);
-        req.user=decoded.user;
-        if(req.user.role!=='superAdmin'){
+        req.user=decoded;
+        if(req.user.Role!=='SuperAdmin'){
             return res.status(401).json({msg:'Not authorized as a super admin'});
         }
         next();
