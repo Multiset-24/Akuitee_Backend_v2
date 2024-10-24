@@ -28,7 +28,7 @@ const AdminProtection= (req, res, next) => {
     try{
         const decoded= jwt.verify(token, process.env.JWT_SECRET);
         req.user=decoded;
-        if(req.user.Role!=='Admin'){
+        if(req.user.Role!=='Admin' && req.user.Role!=='SuperAdmin'){
             return res.status(401).json({msg:'Not authorized as an admin'});
         }
         next();

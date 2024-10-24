@@ -5,11 +5,11 @@ const industrySchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    Content_id:[{
+    Content_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'Content',
         required: true
-    }],
+    },
 },{
     timestamps: true
 });

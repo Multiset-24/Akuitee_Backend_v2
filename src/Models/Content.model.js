@@ -11,23 +11,21 @@ const contentSchema = new mongoose.Schema(
       required: true,
     },
     Sector: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Sector",
+      type: String,
       required: true,
     },
     Industry: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Industry",
       required: true,
     },
     Type: {
-      type: string,
+      type: String,
       enum: ["IPO", "ARTICLE"],
       required: true,
     },
     Start_date: {
       type: Date,
-      //validator to check if the doc  is of type IPO the this field is required
       validate: {
         validator: function (v) {
           return this.Type === "IPO" ? v != null : true;
@@ -37,7 +35,6 @@ const contentSchema = new mongoose.Schema(
     },
     End_date: {
       type: Date,
-      //validator to check if the doc  is of type IPO the this field is required
       validate: {
         validator: function (v) {
           return this.Type === "IPO" ? v != null : true;
@@ -47,7 +44,6 @@ const contentSchema = new mongoose.Schema(
     },
     Listing_date: {
       type: Date,
-      //validator to check if the doc  is of type IPO the this field is required
       validate: {
         validator: function (v) {
           return this.Type === "IPO" ? v != null : true;
@@ -55,10 +51,9 @@ const contentSchema = new mongoose.Schema(
         message: "Listing date is required for IPO",
       },
     },
-    Catogory: {
-      type: string,
+    Category: {
+      type: String,
       enum: ["SME", "NON-SME"],
-      //validator to check if the doc  is of type IPO the this field is required
       validate: {
         validator: function (v) {
           return this.Type === "IPO" ? v != null : true;
