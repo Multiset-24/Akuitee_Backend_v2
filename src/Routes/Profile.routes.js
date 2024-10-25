@@ -6,7 +6,7 @@ import {
 
 import express from "express";
 import {editProfile} from '../Controllers/editProfile.handler.js';
-import {getAllUsers, getAllAdmins, createAdmin, removeAdmin, deleteUser} from '../Controllers/adminCreationRemoval.handler.js';
+import {getAllUsers, getAllAdmins, createAdmin, removeAdmin, deleteUser} from '../Controllers/adminCreationRemovalandGetAdminsandUsers.handler.js';
 import {notesCreation, notesList, notesUpdate, notesDelete} from '../Controllers/notes.handler.js';
 import {addToWatchlist, removeFromWatchlist, getWatchlist} from '../Controllers/watchlist.handler.js';
 const router = express.Router();

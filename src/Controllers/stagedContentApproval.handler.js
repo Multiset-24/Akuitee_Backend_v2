@@ -6,6 +6,8 @@ import ApiResponse from '../Utils/ApiResponse.js';
 import ApiError from '../Utils/ApiError.js';
 import { AsyncHandler } from '../Utils/AsyncHandler.js';
 import sendMail from '../Utils/SendMessageMail.js';
+import User from '../Models/User.model.js';
+
 /**
  * @desc      Approve staged content
  * @route     POST /api/v2/staged-content/approve/:id
@@ -13,12 +15,15 @@ import sendMail from '../Utils/SendMessageMail.js';
  */
 const approveStagedContent = AsyncHandler(async (req, res) => {
     const { id } = req.params;
-
+    const {Action}=req.body;
     const stagedContent = await StagedContent.findById({_id: id});
     if (!stagedContent) {
         throw new ApiError(404, "Staged content not found");
     }
-
+    if(Action==="Rejected"){
+        await stagedContent.deleteOne();
+        res.status(200).json(new ApiResponse(200, "Content rejected successfully"));
+    }
     const content = new Content({
         Company_Name: stagedContent.Company_Name,
         Type: stagedContent.Type,
@@ -46,8 +51,16 @@ const approveStagedContent = AsyncHandler(async (req, res) => {
 
     await industryDoc.save();
     await sectorDoc.save();
+    
+    const user = await User.findById(stagedContent.Author);
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+    const message = `Your content has been approved and saved successfully`;
+    const subject = `Content approval notification`;
+    await sendMail(user.Email,user.Name, subject , message);
 
-    // Delete the staged content after approval
+    // Send email to the author
     await stagedContent.deleteOne();
 
     res.status(201).json(new ApiResponse(201, "Content approved and saved successfully", content));
