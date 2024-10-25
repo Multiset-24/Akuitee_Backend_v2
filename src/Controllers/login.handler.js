@@ -35,7 +35,7 @@ const loginAndsentOtp = AsyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid Password");
   }
 
-  const otp = crypto.randomInt(1000, 9999).toString();
+  const otp = crypto.randomInt(100000, 999999).toString();
 
   const otpToken = jwt.sign({ Email, otp }, process.env.JWT_SECRET, {
     expiresIn: "10m",
@@ -97,10 +97,9 @@ const verifyLoginOtp = AsyncHandler(async (req, res) => {
 
   const accessToken = user.getAccessToken();
   const refreshToken = user.getRefreshToken();
-
   user.RefreshToken = refreshToken;
   await user.save();
-
+  user.Password = "";
   res
     .cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -112,7 +111,7 @@ const verifyLoginOtp = AsyncHandler(async (req, res) => {
     })
     .header("x-auth-token", accessToken)
     .clearCookie("otpToken")
-    .json(new ApiResponse(200, "Login successful", { accessToken }));
+    .json(new ApiResponse(200, "Login successful", { accessToken,user }));
 });
 
 export { loginAndsentOtp, verifyLoginOtp };
