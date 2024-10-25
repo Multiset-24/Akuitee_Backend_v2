@@ -13,7 +13,6 @@ import { AsyncHandler } from "../Utils/AsyncHandler.js";
  */
 const signUpArambh = AsyncHandler(async (req, res) => {
   const { Name, Email, Password } = req.body;
-
   if (!Name || !Email || !Password) {
     throw new ApiError(400, "Please provide all the details");
   }
