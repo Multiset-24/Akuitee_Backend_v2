@@ -10,7 +10,7 @@ import Industry from '../Models/Industry.model.js';
  * @access    Public
  */
 const getAllIpos = AsyncHandler(async (req, res) => {
-    const ipos = await Content.find({Type: "IPO"});
+    const ipos = await Content.find({Type: "IPO"}).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, ipos));
 });
 
@@ -20,7 +20,7 @@ const getAllIpos = AsyncHandler(async (req, res) => {
  * @access    Public
  */
 const getAllArtciles = AsyncHandler(async (req, res) => {
-    const articles = await Content.find({Type: "ARTICLE"});
+    const articles = await Content.find({Type: "ARTICLE"}).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, articles));
 });
 
@@ -53,7 +53,7 @@ const getAllIndustries = AsyncHandler(async (req, res) => {
  */
 const getFilteredContent = AsyncHandler(async (req, res) => {
     const {sector, industry} = req.body;
-    const content = await Content.find({Sector: sector, Industry: industry});
+    const content = await Content.find({Sector: sector, Industry: industry}).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, content));
 });
 
@@ -64,7 +64,7 @@ const getFilteredContent = AsyncHandler(async (req, res) => {
  */
 const getSpecificContent = AsyncHandler(async (req, res) => {
     const {id} = req.params;
-    const content = await Content.findById(id);
+    const content = await Content.findById(id).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, content));
 });
 

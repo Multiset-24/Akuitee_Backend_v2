@@ -1,7 +1,4 @@
 import User from '../Models/User.model.js';
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import sendOtpMail from '../Utils/SendOtpMail.js';
 import ApiError from '../Utils/ApiError.js';
 import ApiResponse from '../Utils/ApiResponse.js';
 import { AsyncHandler } from '../Utils/AsyncHandler.js';
@@ -30,11 +27,11 @@ const createContent = AsyncHandler(async (req, res) => {
     const Author = req.user.id;
     const content = new Content({
         Company_Name: Company_name,
-        Type,
+        Type: Type,
         Sector:sector,
         Industry:industry,
         Content: contentData,
-        Author
+        Author: Author
     });
 
     if (Type === "IPO") {
@@ -46,6 +43,7 @@ const createContent = AsyncHandler(async (req, res) => {
     }
 
     await content.save();
+    const Author_name = await User.findById(Author).select('Name');
 
     // Create new industry and sector documents with the content ID
     const industryDoc = new Industry({
@@ -60,7 +58,7 @@ const createContent = AsyncHandler(async (req, res) => {
     await industryDoc.save();
     await sectorDoc.save();
 
-    res.status(201).json(new ApiResponse(201, "Content created successfully", content));
+    res.status(201).json(new ApiResponse(201, "Content created successfully",{Author_name, content}));
 });
 
 /**

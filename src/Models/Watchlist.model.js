@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-const savedContentSchema = new mongoose.Schema({
+const watchListSchema = new mongoose.Schema({
     Content:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'StagedContent',
+        ref: 'Content',
         required: true
     },
     User:{
@@ -15,6 +15,6 @@ const savedContentSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const SavedContent = mongoose.model('SavedContent', savedContentSchema);
+const Watchlist = mongoose.model('Watchlist', watchListSchema);
 
-export default SavedIpo;
+export default Watchlist;

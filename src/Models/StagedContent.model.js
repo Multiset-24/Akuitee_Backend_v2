@@ -11,12 +11,11 @@ const stagedcontentSchema = new mongoose.Schema(
       required: true,
     },
     Sector: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Sector",
+      type: String,
       required: true,
     },
     Industry: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Industry",
       required: true,
     },
@@ -55,7 +54,7 @@ const stagedcontentSchema = new mongoose.Schema(
         message: "Listing date is required for IPO",
       },
     },
-    Catogory: {
+    Category: {
       type: String,
       enum: ["SME", "NON-SME"],
       //validator to check if the doc  is of type IPO the this field is required
@@ -79,6 +78,11 @@ const stagedcontentSchema = new mongoose.Schema(
       type: String,
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
+    },
+    OriginalContentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Content",
+      required: false,
     },
   },
   {
