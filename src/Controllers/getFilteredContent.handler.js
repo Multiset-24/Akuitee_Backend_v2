@@ -52,14 +52,23 @@ const getAllIndustries = AsyncHandler(async (req, res) => {
  * @access    Public
  */
 const getFilteredContent = AsyncHandler(async (req, res) => {
-    const {Sector ,Industry , Type , Open,Closed,Listed,Category} = req.body;
+    const {Sector ,Industry , Type , Open,Closed,Listing,Category} = req.body;
     const filter = {};
     if(Sector) filter.Sector = Sector;
     if(Industry) filter.Industry = Industry;
     if(Type) filter.Type = Type;
     if(Open) filter.End_date = {$gte:new Date()};
     if(Closed) filter.End_date = {$lte:new Date()};
-    if(Listed) filter.Listing_date = {$gte:new Date()};
+    //get all ipos that are listing on the day of the request
+    if (Listing) {
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+
+        filter.Listing_date = { $gte: startOfDay, $lt: endOfDay };
+    }
     if(Category) filter.Category = Category;
     const content = await Content.find(filter).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, content));
