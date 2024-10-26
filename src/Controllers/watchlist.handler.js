@@ -6,7 +6,7 @@ import Content from '../Models/Content.model.js';
 
 /**
  * @desc Add a content to watchlist
- * @route POST /watchlist/add
+ * @route POST /api/v2/profile/watchlist/add
  * @access Private
  */
 const addToWatchlist = AsyncHandler(async (req, res) => {
@@ -29,7 +29,7 @@ const addToWatchlist = AsyncHandler(async (req, res) => {
 
 /**
     * @desc Remove a content from watchlist
-    * @route DELETE /watchlist/remove
+    * @route DELETE /api/v2/profile/watchlist/remove
     * @access Private
  */
 const removeFromWatchlist = AsyncHandler(async (req, res) => {
@@ -47,7 +47,7 @@ const removeFromWatchlist = AsyncHandler(async (req, res) => {
 
 /**
  * @desc Get all the contents in the watchlist
- * @route GET /watchlist
+ * @route GET /api/v2/profile/watchlist
  * @access Private
  */
 const getWatchlist = AsyncHandler(async (req, res) => {

@@ -21,7 +21,7 @@ router.route('/ipos').get(p, getAllIpos);
 router.route('/articles').get(p, getAllArtciles);
 router.route('/sectors').get(p, getAllsectors);
 router.route('/industries').get(p, getAllIndustries);
-router.route('/filter').post(p, getFilteredContent);
+router.route('/filter').get(p, getFilteredContent);
 router.route('/specific/:id').get(p, getSpecificContent);
 router.route('/staged-content/create').post(p,ap, createStagedContent);
 router.route('/staged-content/update/:id').put(p,ap, updateStagedContent);

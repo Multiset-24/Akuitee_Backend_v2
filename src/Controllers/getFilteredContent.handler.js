@@ -52,8 +52,16 @@ const getAllIndustries = AsyncHandler(async (req, res) => {
  * @access    Public
  */
 const getFilteredContent = AsyncHandler(async (req, res) => {
-    const {sector, industry} = req.body;
-    const content = await Content.find({Sector: sector, Industry: industry}).populate('Author', 'Name');
+    const {Sector ,Industry , Type , Open,Closed,Listed,Category} = req.body;
+    const filter = {};
+    if(Sector) filter.Sector = Sector;
+    if(Industry) filter.Industry = Industry;
+    if(Type) filter.Type = Type;
+    if(Open) filter.End_date = {$gte:new Date()};
+    if(Closed) filter.End_date = {$lte:new Date()};
+    if(Listed) filter.Listing_date = {$gte:new Date()};
+    if(Category) filter.Category = Category;
+    const content = await Content.find(filter).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, content));
 });
 
@@ -66,6 +74,22 @@ const getSpecificContent = AsyncHandler(async (req, res) => {
     const {id} = req.params;
     const content = await Content.findById(id).populate('Author', 'Name');
     res.status(200).json(new ApiResponse(200, content));
+});
+
+const getOpenIpos = AsyncHandler(async (req, res) => {
+    const ipos= await Content.find({Type:"IPO",End_date:{$gte:new Date()}}).populate('Author', 'Name');//get all ipos that are yet to be listed
+    res.status(200).json(new ApiResponse(200, ipos));
+});
+
+const getClosedIpos = AsyncHandler(async (req, res) => {
+    const ipos= await Content.find({Type:"IPO",End_date:{$lte:new Date()}}).populate('Author', 'Name');//get all ipos that have been closed
+    res.status(200).json(new ApiResponse(200, ipos));
+});
+
+
+const getUpcomingIpos = AsyncHandler(async (req, res) => {
+    const ipos= await Content.find({Type:"IPO",Listing_date:{$gte:new Date()}}).populate('Author', 'Name');//get all ipos that are yet to be listed
+    res.status(200).json(new ApiResponse(200, ipos));
 });
 
 
