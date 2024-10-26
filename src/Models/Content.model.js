@@ -76,6 +76,21 @@ const contentSchema = new mongoose.Schema(
   }
 );
 
+contentSchema.pre('validate', function (next) {
+  if (this.Type === 'IPO') {
+      if (this.Start_date >= this.End_date) {
+          this.invalidate('End_date', 'End date must be greater than start date');
+      }
+      if (this.End_date >= this.Listing_date) {
+          this.invalidate('Listing_date', 'Listing date must be greater than end date');
+      }
+      if(this.Start_date>=this.Listing_date){
+          this.invalidate('Listing_date', 'Listing date must be greater than start date');
+      }
+  }
+  next();
+});
+
 const Content = mongoose.model("Content", contentSchema);
 
 export default Content;
