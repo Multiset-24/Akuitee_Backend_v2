@@ -61,6 +61,16 @@ const contentSchema = new mongoose.Schema(
         message: "Category is required for IPO",
       },
     },
+    Size: {
+      type: String,
+      enum: ["Small cap","Mid cap","Micro cap"],
+      validate: {
+        validator: function (v) {
+          return this.Type === "ARTICLE" ? v != null : true;
+        },
+        message: "Category is required for Article",
+      },
+    },
     Author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -71,6 +81,7 @@ const contentSchema = new mongoose.Schema(
       default: 0,
     },
   },
+
   {
     timestamps: true,
   }
