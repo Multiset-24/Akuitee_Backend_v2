@@ -68,7 +68,7 @@ const contentSchema = new mongoose.Schema(
         validator: function (v) {
           return this.Type === "ARTICLE" ? v != null : true;
         },
-        message: "Category is required for Article",
+        message: "Size is required for Article",
       },
     },
     Author: {
