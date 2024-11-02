@@ -70,6 +70,16 @@ const stagedcontentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    Size: {
+      type: String,
+      enum: ["Small cap","Mid cap","Micro cap"],
+      validate: {
+        validator: function (v) {
+          return this.Type === "ARTICLE" ? v != null : true;
+        },
+        message: "Category is required for Article",
+      },
+    },
     View: {
       type: Number,
       default: 0,
@@ -78,6 +88,11 @@ const stagedcontentSchema = new mongoose.Schema(
       type: String,
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
+    },
+    Action:{
+      type: String,
+      enum: ["Update", "Create"],
+      default: "Create",
     },
     OriginalContentId: {
       type: mongoose.Schema.Types.ObjectId,

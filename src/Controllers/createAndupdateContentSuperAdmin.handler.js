@@ -34,6 +34,10 @@ const createContent = AsyncHandler(async (req, res) => {
         Author: Author
     });
 
+    if(Type==="Article"){
+        const {size}   = req.body;
+        content.Size = size;
+    }
     if (Type === "IPO") {
         const { Start_date, End_date, Listing_date, Category } = req.body;
         content.Start_date = Start_date;
@@ -67,14 +71,20 @@ const createContent = AsyncHandler(async (req, res) => {
  * @access    Private (SuperAdmin only)
  */
 const updateContent = AsyncHandler(async (req, res) => {
-    const { Company_name, Type, Sector, Industry, Content: contentData } = req.body;
+    const { Company_name, Type, Sector, Industry, Content: contentData, } = req.body;
     const { id } = req.params;
 
     const content = await Content.findById(id);
     if (!content) {
         throw new ApiError(404, "Content not found");
     }
-
+    if(Type==="Article"){
+        const {size}   = req.body;
+        if(!size){
+            throw new ApiError(400, "Size is required for Article");
+        }
+        content.Size = size;
+    }
     if (Type === "IPO") {
         const { Start_date, End_date, Listing_date, Category } = req.body;
         if (!Start_date || !End_date || !Listing_date || !Category) {
